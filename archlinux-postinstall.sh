@@ -22,7 +22,7 @@ configure_mirrors() {
 
 install_applications() {
     echo "Installing applications..."
-    sudo pacman -S --noconfirm fastfetch keepassxc yt-dlp gnome-boxes
+    sudo pacman -S --noconfirm fastfetch keepassxc yt-dlp gnome-boxes exa
 }
 
 install_fonts() {
@@ -32,7 +32,7 @@ install_fonts() {
 
 install_kde_tools() {
     echo "Installing KDE tools..."
-    sudo pacman -S --noconfirm gwenview partitionmanager okular kdeconnect spectacle kdenlive haruna filelight kclock
+    sudo pacman -S --noconfirm gwenview partitionmanager okular kdeconnect spectacle kdenlive haruna filelight kclock qpwgraph
 }
 
 setup_firewall() {

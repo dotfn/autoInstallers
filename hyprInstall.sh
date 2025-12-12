@@ -110,7 +110,8 @@ sudo pacman -S --needed --noconfirm uwsm hyprland kitty firefox git xdg-user-dir
 systemctl --user enable --now hyprpolkitagent.service
 
 ##### SESSIN MANAGER
-sudo pacman -S --needed ly
+sudo pacman -S --needed --noconfirm ly
+
 sudo systemctl enable ly@tty2.service
 sudo systemctl disable getty@tty2.service
 

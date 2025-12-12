@@ -13,7 +13,7 @@ configure_pacman() {
   # Ajustar ParallelDownloads a 20 si no está
   if ! grep -qE '^ParallelDownloads\s*=\s*20' "$PACMAN_CONF"; then
     sudo sed -i 's/^ParallelDownloads\s*=\s*[0-9]\+/ParallelDownloads = 20/' "$PACMAN_CONF"
-  fi
+	  fi
 
   # Agregar ILoveCandy si no está
   if ! grep -q 'ILoveCandy' "$PACMAN_CONF"; then
@@ -106,17 +106,17 @@ sudo pacman -S --needed --noconfirm\
 sudo pacman -S --needed --noconfirm uwsm hyprland kitty firefox git xdg-user-dirs xdg-desktop-portal-hyprland hyprpolkitagent
 
 ##### SERVICES
-sudo systemctl enable hyprpolkitagent.service
+#sudo systemctl enable hyprpolkitagent.service
 systemctl --user enable --now hyprpolkitagent.service
 
 ##### SESSIN MANAGER
 sudo pacman -S --needed ly
-sudo systemctl enable ly.service
+sudo systemctl enable ly@tty2.service
 sudo systemctl disable getty@tty2.service
 
 #### NVIM EDITOR
 sudo pacman -S --needed --noconfirm nvim git wl-clipboard
-#git clone https://github.com/LazyVim/starter ~/.config/nvim
+git clone https://github.com/LazyVim/starter ~/.config/nvim
 
 #### FILE EXPLORER
 sudo pacman -S --needed --noconfirm udisks2
@@ -134,11 +134,8 @@ EOF
 ### CONFIG
 ###---------------------------
 hblock -n 10 -p 1
-
 chsh -s $(which zsh)
-
 sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub || echo 'GRUB_TIMEOUT=0' | sudo tee -a /etc/default/grub >/dev/null
-
 command -v update-grub >/dev/null 2>&1 && sudo update-grub >/dev/null 2>&1
 command -v grub-mkconfig >/dev/null 2>&1 && sudo grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1
 

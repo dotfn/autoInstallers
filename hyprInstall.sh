@@ -21,6 +21,8 @@ configure_pacman() {
   fi
 }
 
+configure_pacman
+
 ###---------------------------
 ### FIREWALL - ufw
 ###---------------------------
@@ -49,26 +51,6 @@ else
   cd ..
   rm -rf yay
 fi
-
-###----------------------------
-### OH-MY-ZSH
-###----------------------------
-
-RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
-  sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-git clone https://github.com/zsh-users/zsh-autosuggestions \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-completions \
-  ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
-git clone https://github.com/zsh-users/zsh-history-substring-search \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-git clone https://github.com/Aloxaf/fzf-tab \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
-
-configure_pacman
 
 ###---------------------------
 ### BASE
@@ -109,7 +91,7 @@ sudo pacman -S --needed --noconfirm uwsm hyprland kitty firefox git xdg-user-dir
 #sudo systemctl enable hyprpolkitagent.service
 systemctl --user enable --now hyprpolkitagent.service
 
-##### SESSIN MANAGER
+##### SESSION MANAGER
 sudo pacman -S --needed --noconfirm ly
 
 sudo systemctl enable ly@tty2.service
@@ -136,9 +118,26 @@ EOF
 ###---------------------------
 hblock -n 10 -p 1
 chsh -s $(which zsh)
-sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub || echo 'GRUB_TIMEOUT=0' | sudo tee -a /etc/default/grub >/dev/null
-command -v update-grub >/dev/null 2>&1 && sudo update-grub >/dev/null 2>&1
-command -v grub-mkconfig >/dev/null 2>&1 && sudo grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1
+
+
+###----------------------------
+### OH-MY-ZSH
+###----------------------------
+
+RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
+  sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-completions \
+  ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+git clone https://github.com/zsh-users/zsh-history-substring-search \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+git clone https://github.com/Aloxaf/fzf-tab \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+
 
 ###---------------------------
 ### INSTALACIÓN DE LUCIDGLYPH
@@ -148,5 +147,10 @@ chmod +x "lucidglyph/lucidglyph.sh"
 sudo "lucidglyph/lucidglyph.sh" install
 rm -rf "lucidglyph"
 
+
+##### GRUB 
+sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/' /etc/default/grub || echo 'GRUB_TIMEOUT=0' | sudo tee -a /etc/default/grub >/dev/null
+command -v update-grub >/dev/null 2>&1 && sudo update-grub >/dev/null 2>&1
+command -v grub-mkconfig >/dev/null 2>&1 && sudo grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1
 
 
